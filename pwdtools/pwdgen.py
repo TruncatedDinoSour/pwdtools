@@ -319,7 +319,7 @@ def main() -> int:
         except ImportError:
             err(
                 "( pip ) install ( --upgrade --user --break-system-packages ) \
-`pyperclip` for --yank / -y support"
+`pyperclip` for --yank / -Y support"
             )
 
     try:
