@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """password manager"""
 
+__version__: str = "1.0.0"
+
 
 def main() -> int:
     """entry / main function"""

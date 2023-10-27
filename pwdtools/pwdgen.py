@@ -10,6 +10,7 @@ from typing import Any, Dict, Final, NoReturn, Optional, Tuple
 from armour.gen import gen, info
 
 __version__: str = "1.0.0"
+
 MOD_LEN_DELTA: int = 2
 
 
@@ -314,8 +315,10 @@ def main() -> int:
         try:
             import pyperclip  # type: ignore
         except ImportError:
-            err("( pip ) install ( --upgrade --user --break-system-packages ) \
-`pyperclip` for --yank / -y support")
+            err(
+                "( pip ) install ( --upgrade --user --break-system-packages ) \
+`pyperclip` for --yank / -y support"
+            )
 
     try:
         check_kwargs(kwargs)
