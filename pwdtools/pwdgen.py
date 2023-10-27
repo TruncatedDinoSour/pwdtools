@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """password generator"""
 
+from __future__ import annotations
+
 import string
 import sys
 from optparse import Option, OptionParser, make_option
@@ -349,5 +351,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    assert main.__annotations__.get("return") is int, "main() should return an integer"
     raise SystemExit(main())

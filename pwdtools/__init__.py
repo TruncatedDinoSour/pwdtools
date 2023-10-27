@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """pwdtools -- tools for password generation, management and checking"""
 
+from __future__ import annotations
+
 from typing import Tuple
 
 from . import pwdgen, pwdinfo, pwdmgr, pwdzxc

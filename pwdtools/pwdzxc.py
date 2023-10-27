@@ -56,5 +56,4 @@ score                       {SCORE_STRINGS[stats['score']]} ( {stats['score']} )
 
 
 if __name__ == "__main__":
-    assert main.__annotations__.get("return") is int, "main() should return an integer"
     sys.exit(main())

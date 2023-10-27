@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 """password manager"""
 
+from __future__ import annotations
+
 __version__: str = "1.0.0"
 
 
@@ -14,5 +16,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    assert main.__annotations__.get("return") is int, "main() should return an integer"
     raise SystemExit(main())
