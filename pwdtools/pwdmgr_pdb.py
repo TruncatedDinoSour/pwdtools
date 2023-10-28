@@ -216,10 +216,10 @@ remark      {e.remark!r}
         ):
             return 0
 
-        with open(out, "w", newline="") as fp:
+        with open(out, "w", newline="", encoding="utf-8") as fp:
             dw: csv.DictWriter[str] = csv.DictWriter(
                 fp,
-                [f.decode() for f in armour.pdb.entries.PdbPwdEntry.all_fields],
+                [f.decode("utf-8") for f in armour.pdb.entries.PdbPwdEntry.all_fields],
             )
 
             dw.writeheader()
@@ -240,7 +240,7 @@ remark      {e.remark!r}
 
         util.log("parsing csv")
 
-        with open(file, "r") as fp:
+        with open(file, "r", encoding="utf-8") as fp:
             d: Tuple[Dict[str, str], ...] = tuple(csv.DictReader(fp))
 
         keys: Tuple[str, ...] = tuple(d[0].keys())

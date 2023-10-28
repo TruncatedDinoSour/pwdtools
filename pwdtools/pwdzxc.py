@@ -22,11 +22,9 @@ SCORE_STRINGS: Tuple[str, ...] = (
 )
 
 
-def filter_zxcvbn_crack_key(key: str) -> str:
-    return key.removeprefix("offline_").removeprefix("online_")
-
-
 def log(message: str, header: str = "WARNING") -> None:
+    """log a message"""
+
     sys.stderr.write(f" * {header}: {message}\n")
     sys.stderr.flush()
 

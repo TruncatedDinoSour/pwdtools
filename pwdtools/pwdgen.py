@@ -340,10 +340,10 @@ def main(kwargs: Dict[str, Any]) -> int:
             pyperclip.copy(pw.decode("latin-1"))  # type: ignore
             log("copied the first password to clipboard")
             break
-        else:
-            sys.stdout.buffer.write(pw + kwargs["end"])
-            sys.stdout.buffer.flush()
-            sys.stdout.flush()
+
+        sys.stdout.buffer.write(pw + kwargs["end"])
+        sys.stdout.buffer.flush()
+        sys.stdout.flush()
 
     return 0
 

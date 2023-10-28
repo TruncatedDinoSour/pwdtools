@@ -10,9 +10,9 @@ from typing import Optional
 import armour
 
 from . import util
+from .pwdmgr_clipboard import clip, clipboard_timer
 from .pwdmgr_cmds import Cmds
 from .pwdmgr_pdb import PdbCmds
-from .pwdmgr_clipboard import clip, clipboard_timer
 
 
 class HomeCmds(Cmds):

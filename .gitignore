@@ -172,3 +172,4 @@ cython_debug/
 *.pdb
 *.slt
 *.csv
+*.pwd-with-slt-and-pdb
