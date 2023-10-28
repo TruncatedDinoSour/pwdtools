@@ -124,8 +124,10 @@ class HomeCmds(Cmds):
 
         util.log("dumping database")
 
+        db_bin: bytes = p.to_pdb()
+
         with open(db, "wb") as fp:
-            fp.write(p.to_pdb())
+            fp.write(db_bin)
 
         with open(slt, "wb") as fp:
             fp.write(p.salt)

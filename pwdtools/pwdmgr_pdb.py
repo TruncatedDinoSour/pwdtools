@@ -124,8 +124,10 @@ class PdbCmds(Cmds):
         util.log("commiting to db")
         self.e.commit()
 
+        db_bin: bytes = self.p.to_pdb()
+
         with open(self.dbp, "wb") as fp:
-            fp.write(self.p.to_pdb())
+            fp.write(db_bin)
             util.log(f"wrote db to {fp.name!r}")
 
         self.modified = False
