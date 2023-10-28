@@ -4,93 +4,45 @@
 
 from __future__ import annotations
 
-import multiprocessing as mp
 import sys
-from abc import ABC
-from dataclasses import dataclass
-from typing import List
+from typing import Any, List
 
-import armour.pdb
+import armour.pdb.header
 
-from . import pwdgen, pwdinfo, pwdzxc
+from . import pwdmgr_home, util
+from .pwdmgr_clipboard import clip, clipboard_timer
+
+try:
+    import readline
+except ImportError:
+    readline: Any = None  # type: ignore
+
 
 __version__: str = "1.0.0"
-
-
-def log(msg: str) -> None:
-    """log a message"""
-
-    print(f" * {msg}", file=sys.stderr)
-
-
-class Cmds(ABC):
-    """function eq to 'external' cmds"""
-
-    def cmd_help(self) -> int:
-        """print help"""
-
-        for cmd in dir(self):
-            if cmd[:4] == "cmd_":
-                log(f"{cmd[4:]} -- {getattr(self, cmd).__doc__ or 'no help provided'}")
-
-        return 0
-
-    def cmd_gen(self, *argv: str) -> int:
-        """runs `pwdgen`"""
-
-        p: mp.Process = mp.Process(
-            target=lambda: pwdgen.main(
-                pwdgen.OPTIONS.parse_args(list(argv))[0].__dict__,
-            ),
-        )
-        p.start()
-        p.join()
-
-        return p.exitcode or 0
-
-    def cmd_info(self) -> int:
-        """runs `pwdinfo`"""
-
-        p: mp.Process = mp.Process(target=pwdinfo.main)
-        p.start()
-        p.join()
-
-        return p.exitcode or 0
-
-    def cmd_zxc(self) -> int:
-        """runs `pwdzxc`"""
-
-        p: mp.Process = mp.Process(target=pwdzxc.main)
-        p.start()
-        p.join()
-
-        return p.exitcode or 0
-
-
-@dataclass
-class HomeCmds(Cmds):
-    """home mode commands"""
 
 
 def main() -> int:
     """entry / main function"""
 
+    if len(sys.argv) >= 3:
+        try:
+            return pwdmgr_home.HomeCmds().cmd_open(sys.argv[1], sys.argv[2])
+        except Exception as e:
+            return util.err(f"failed to open the db : {e}")
+
+    clipboard_timer()
     print(f"welcome to pwdmgr v{__version__} for pDB {armour.pdb.header.VERSION}\n")
 
-    try:
-        import readline
-
-        readline.read_init_file()
-    except ImportError:
-        pass
+    if readline:
+        readline.parse_and_bind("tab: complete")
+        readline.set_history_length(-1)
 
     ex: int = 0
-
-    cmds: HomeCmds = HomeCmds()
+    cmds: pwdmgr_home.HomeCmds = pwdmgr_home.HomeCmds()
 
     while True:
         try:
-            cmd: str = input(f"[{ex}]> ")
+            cmd: str = input(f"<{clip[0]}>[{ex}]> ")
         except EOFError:
             print()
             return ex
@@ -105,13 +57,13 @@ def main() -> int:
         argv: List[str] = cmd.split()
 
         if (cmd_fn := getattr(cmds, f"cmd_{argv[0]}", None)) is None:
-            log(f"unkown command {argv[0]!r}\n")
+            util.log(f"unkown command {argv[0]!r}\n")
             continue
 
         try:
             ex = cmd_fn(*argv[1:])
         except Exception as e:
-            log(f"error : {e}")
+            ex = util.err(str(e))
         finally:
             print()
 
