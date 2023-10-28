@@ -308,8 +308,11 @@ def gen_pw(pgen: gen.PwGenerator) -> Optional[bytes]:
     return None
 
 
-def main(kwargs: Dict[str, Any]) -> int:
+def main(kwargs: Optional[Dict[str, Any]] = None) -> int:
     """entry / main function"""
+
+    if kwargs is None:
+        kwargs = OPTIONS.parse_args(sys.argv)[0].__dict__
 
     if kwargs["yank"]:
         try:
@@ -349,4 +352,4 @@ def main(kwargs: Dict[str, Any]) -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(OPTIONS.parse_args(sys.argv)[0].__dict__))
+    raise SystemExit(main())
