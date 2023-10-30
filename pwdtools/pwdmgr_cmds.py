@@ -65,3 +65,8 @@ class Cmds(ABC):
         """clear clipboard"""
         clipboard_clear()
         return 0
+
+    def cmd_cc(self) -> int:
+        """clear screen"""
+        print("\033[H\033[J", end="")
+        return 0
