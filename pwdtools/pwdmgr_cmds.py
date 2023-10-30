@@ -58,6 +58,7 @@ class Cmds(ABC):
 
     def cmd_exit(self) -> NoReturn:
         """exit"""
+        clipboard_clear()
         sys_exit(0)
 
     def cmd_c(self) -> int:

@@ -10,7 +10,7 @@ from typing import Optional
 import armour
 
 from . import util
-from .pwdmgr_clipboard import clip, clipboard_timer
+from .pwdmgr_clipboard import clip, clipboard_clear, clipboard_timer
 from .pwdmgr_cmds import Cmds
 from .pwdmgr_pdb import PdbCmds
 
@@ -183,6 +183,8 @@ class HomeCmds(Cmds):
                 )
             except EOFError:
                 print()
+
+                clipboard_clear()
 
                 if cmds.modified and util.yn("commit changes"):
                     cmds.cmd_commit()
