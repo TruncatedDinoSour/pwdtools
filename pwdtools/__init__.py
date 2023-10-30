@@ -8,7 +8,7 @@ from typing import Tuple
 
 from . import pwdgen, pwdinfo, pwdmgr, pwdzxc
 
-__version__: str = "1.0.2"
+__version__: str = "1.0.3"
 __all__: Tuple[str, ...] = (
     "__version__",
     "pwdgen",

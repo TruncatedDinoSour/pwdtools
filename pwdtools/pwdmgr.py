@@ -10,7 +10,7 @@ from typing import Any, List
 import armour.pdb.header
 
 from . import pwdmgr_home, util
-from .pwdmgr_clipboard import clip, clipboard_timer
+from .pwdmgr_clipboard import clip, clipboard_clear, clipboard_timer
 
 try:
     import readline
@@ -45,6 +45,7 @@ def main() -> int:
             cmd: str = input(f"<{clip[0]}>[{ex}]> ")
         except EOFError:
             print()
+            clipboard_clear()
             return ex
         except KeyboardInterrupt:
             print("\n")
